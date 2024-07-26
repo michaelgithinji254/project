@@ -1,0 +1,125 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.5rem 1rem;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+}
+
+.navbar a:hover {
+    background-color: #0056b3;
+    border-radius: 4px;
+}
+
+.navbar .navbar-brand {
+    font-weight: bold;
+}
+
+.navbar .navbar-nav {
+    float: right;
+}
+
+.navbar .navbar-nav li {
+    display: inline;
+}
+
+/* Container */
+.container {
+    max-width: 600px;
+    margin-top: 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styles */
+form {
+    margin-top: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 4px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.alert {
+    margin-top: 20px;
+}
+
+/* Footer */
+.footer {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+/* Custom styles for blog forum */
+body {
+    padding-top: 60px;
+}
+
+.navbar {
+    background-color: #007bff;
+    color: white;
+}
+
+.navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+}
+
+.card-body {
+    background-color: #ffffff;
+}
+
+.alert {
+    margin-top: 20px;
+}
