@@ -28,7 +28,7 @@ $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
 $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING); // Sanitize password (basic, use stronger hashing)
 
 // Validate login credentials
-$sql = "SELECT id, email, role, password FROM users WHERE email = ?";
+$sql = "SELECT id, Email, Role, Password FROM users WHERE email = ?";
 $stmt = $conn->prepare($sql);
 
 // Check if statement preparation was successful
@@ -50,18 +50,18 @@ if ($result->num_rows === 1) {
     $row = $result->fetch_assoc();
     
     // Verify the password
-    if (password_verify($password, $row['password'])) {
+    if (password_verify($password, $row['Password'])) {
         // Login successful
         session_start(); // Start session
         $_SESSION['user_id'] = $row['id'];
-        $_SESSION['user_email'] = $row['email'];
-        $_SESSION['user_role'] = $row['role'];
+        $_SESSION['user_email'] = $row['Email'];
+        $_SESSION['user_role'] = $row['Role'];
 
         // Redirect based on role
-        if ($row['role'] === 'farmer') {
+        if ($row['Role'] === 'farmer') {
             header('Location: farmer.php'); // Redirect to farmer dashboard
-        } else if ($row['role'] === 'veterinary') {
-            header('Location: appointmentlist.php'); // Redirect to veterinary dashboard
+        } else if ($row['Role'] === 'veterinary') {
+            header('Location: appointment.php'); // Redirect to veterinary dashboard
         } else {
             // Handle unexpected role scenario (optional)
             echo 'Invalid user role.';

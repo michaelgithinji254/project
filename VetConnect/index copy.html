@@ -1,0 +1,57 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
+include 'DBconnection.php';
+
+// Fetch counties and veterinarians
+$counties = $conn->query("SELECT DISTINCT county FROM users");
+$veterinarians = $conn->query("SELECT id, full_name, county FROM users WHERE role = 'veterinary'");
+
+// Check if queries were successful
+if ($counties === false) {
+    die("Error fetching counties: " . $conn->error);
+}
+
+if ($veterinarians === false) {
+    die("Error fetching veterinarians: " . $conn->error);
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $county = $_POST['county'];
+    $vet_id = $_POST['vet_id'];
+    $appointment_date = $_POST['appointment_date'];
+    $appointment_time = $_POST['appointment_time'];
+
+    // Check if the date and time are available
+    $stmt = $conn->prepare("SELECT * FROM appointments WHERE vet_id = ? AND appointment_date = ? AND appointment_time = ?");
+    if ($stmt === false) {
+        die("Prepare failed: " . $conn->error);
+    }
+
+    $stmt->bind_param("iss", $vet_id, $appointment_date, $appointment_time);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<div class='alert alert-danger'>The selected time slot is already booked.</div>";
+    } else {
+        // Book the appointment
+        $stmt = $conn->prepare("INSERT INTO appointments (vet_id, farmer_id, appointment_date, appointment_time) VALUES (?, ?, ?, ?)");
+        if ($stmt === false) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("iiss", $vet_id, $_SESSION['user_id'], $appointment_date, $appointment_time);
+        if ($stmt->execute()) {
+            echo "<div class='alert alert-success'>Appointment booked successfully!</div>";
+        } else {
+            echo "<div class='alert alert-danger'>Failed to book the appointment. " . $stmt->error . "</div>";
+        }
+    }
+    $stmt->close();
+}
+?>
